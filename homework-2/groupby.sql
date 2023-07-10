@@ -22,11 +22,11 @@ ORDER BY COUNT(*) DESC;
 -- но вывести только те результаты, где суммарный вес на страну больше 2750.
 -- Отсортировать по убыванию суммарного веса (см таблицу orders,
 -- колонки ship_region, ship_country, freight)
-select ship_country, freight_sum from (SELECT ship_country, SUM (freight) as freight_sum FROM orders
-where (ship_region is not null)
+select ship_country, SUM (freight) FROM orders
+where ship_region is not null
 GROUP BY ship_country
-ORDER BY SUM (freight) DESC) a
-where freight_sum > 2750;
+HAVING SUM(freight) > 2750
+ORDER BY SUM (freight) DESC;
 
 -- 6. страны, в которых зарегистрированы и заказчики (customers)
 -- и поставщики (customers) и работники (employees).
